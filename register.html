@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diiwaangeli</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+        
+        input[type="file"] {
+            padding: 8px;
+            border: 2px dashed #ddd;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        
+        input[type="file"]:hover {
+            border-color: #1a73e8;
+        }
+        
+        .profile-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 10px auto;
+            display: block;
+            border: 3px solid #ddd;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #1557b0;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+        
+        .login-link a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Samee Akoon Cusub</h2>
+        
+        <form id="registerForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="username">Magaca Isticmaalaha:</label>
+                <input type="text" id="username" name="username" required>
+                <div id="usernameError" class="error-message">Magacan waa la isticmaalayaa</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="profile">Sawirka Profile-ka (ikhtiyaari):</label>
+                <input type="file" id="profile" name="profile" accept="image/*">
+                <img id="profilePreview" class="profile-preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Profile preview">
+            </div>
+            
+            <button type="submit" class="btn">Diiwaangeli</button>
+            
+            <div id="successMessage" class="success-message">
+                Hambaliyo Akoonkaga waa la sameeyay! <a href="/login.html">Halkan ku gal</a>
+            </div>
+        </form>
+        
+        <div class="login-link">
+            Hore ayaan u lahaa? <a href="/login.html">Ku gal halkan</a>
+        </div>
+    </div>
+
+    <script>
+        // Preview profile image
+        document.getElementById('profile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profilePreview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Check username availability
+        document.getElementById('username').addEventListener('blur', function() {
+            const username = this.value.trim();
+            if (username) {
+                fetch('/check-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        document.getElementById('usernameError').style.display = 'block';
+                    } else {
+                        document.getElementById('usernameError').style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const usernameError = document.getElementById('usernameError');
+            
+            if (usernameError.style.display === 'block') {
+                alert('Fadlan dooro magac kale, kan waxaa isticmaalaya qof kale');
+                return;
+            }
+            
+            fetch('/register', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('registerForm').reset();
+                    document.getElementById('profilePreview').src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+                } else {
+                    return response.json().then(data => {
+                        alert(data.error || 'Khalad ayaa dhacay');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Khalad ayaa dhacay');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+[
+  {
+    "id": "c24e9fdb-5602-42d0-b229-bb798db4ebf6",
+    "userId": "92dbe6c8-5ea8-4007-bf39-9e256f642c31",
+    "username": "lacaso",
+    "profileImage": "1758313415006-956165397-images (1).jfif",
+    "text": "malin wanaagsan asxaabay ",
+    "media": "1758418172757-542801559-sun-blasts-a-m66-flare.jpg",
+    "mediaType": "image",
+    "createdAt": "2025-09-21T01:29:32.777Z",
+    "likes": [],
+    "comments": []
+  },
+  {
+    "id": "4c4b3c81-bf56-44e8-b096-f0c2941cf1c9",
+    "userId": "92dbe6c8-5ea8-4007-bf39-9e256f642c31",
+    "username": "zaki",
+    "profileImage": "1758313415006-956165397-images (1).jfif",
+    "text": "malin wanaagsan",
+    "media": "1758313452989-504463263-images.jfif",
+    "mediaType": "image",
+    "createdAt": "2025-09-19T20:24:12.992Z",
+    "likes": [],
+    "comments": [
+      {
+        "id": "212e1b8a-b54a-412f-ae13-2368a4acb417",
+        "userId": "92dbe6c8-5ea8-4007-bf39-9e256f642c31",
+        "username": "zaki",
+        "profileImage": "1758313415006-956165397-images (1).jfif",
+        "comment": "salaan",
+        "createdAt": "2025-09-19T20:24:25.970Z"
+      },
+      {
+        "id": "3ea78b95-e005-4d23-a1ab-417fde194b3b",
+        "userId": "92dbe6c8-5ea8-4007-bf39-9e256f642c31",
+        "username": "zaki",
+        "profileImage": "1758313415006-956165397-images (1).jfif",
+        "comment": "malin kale",
+        "createdAt": "2025-09-19T20:50:35.782Z"
+      }
+    ]
+  }
+]

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samee Post</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .header h1 {
+            color: #1a73e8;
+            font-size: 24px;
+        }
+        
+        .back-btn {
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+        
+        .file-upload {
+            margin-bottom: 20px;
+        }
+        
+        .file-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        
+        .file-input:hover {
+            border-color: #1a73e8;
+        }
+        
+        .preview-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .preview-title {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .video-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #1557b0;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .file-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Samee Post Cusub</h1>
+            <a href="/index.html" class="back-btn">Bogga Hore</a>
+        </div>
+        
+        <form id="postForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <textarea id="text" name="text" placeholder="Wax ka qor... (ikhtiyaari)" maxlength="500"></textarea>
+                <div class="file-info" id="charCount">0/500 erey</div>
+            </div>
+            
+            <div class="file-upload">
+                <input type="file" id="media" name="media" accept="image/*,video/*" class="file-input">
+                <div class="file-info">Ku soo rog sawir ama muqaal (ikhtiyaari)</div>
+            </div>
+            
+            <div class="preview-container" id="previewContainer" style="display: none;">
+                <div class="preview-title">Soo bandhig:</div>
+                <img id="imagePreview" class="image-preview" style="display: none;">
+                <video id="videoPreview" class="video-preview" controls style="display: none;">
+                    Your browser does not support the video tag.
+                </video>
+                <button type="button" class="remove-btn" onclick="removeMedia()">Ka saar</button>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">Post</button>
+            
+            <div id="successMessage" class="success-message">
+                Post-kaga waa la sameeyay! <a href="/index.html">Eeg bogga hore</a>
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                Khalad ayaa dhacay, isku day mar kale
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const mediaInput = document.getElementById('media');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const videoPreview = document.getElementById('videoPreview');
+        const textArea = document.getElementById('text');
+        const charCount = document.getElementById('charCount');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Character counter for text area
+        textArea.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = `${length}/500 erey`;
+            
+            if (length > 500) {
+                charCount.style.color = '#dc3545';
+            } else {
+                charCount.style.color = '#666';
+            }
+        });
+
+        // Media file selection
+        mediaInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                previewContainer.style.display = 'block';
+                
+                if (file.type.startsWith('image/')) {
+                    imagePreview.style.display = 'block';
+                    videoPreview.style.display = 'none';
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                    
+                } else if (file.type.startsWith('video/')) {
+                    imagePreview.style.display = 'none';
+                    videoPreview.style.display = 'block';
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        videoPreview.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        // Remove media
+        function removeMedia() {
+            mediaInput.value = '';
+            previewContainer.style.display = 'none';
+            imagePreview.style.display = 'none';
+            videoPreview.style.display = 'none';
+            imagePreview.src = '';
+            videoPreview.src = '';
+        }
+
+        // Handle form submission
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Post-gareynaya...';
+            
+            const formData = new FormData(this);
+            
+            fetch('/post', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('errorMessage').style.display = 'none';
+                    this.reset();
+                    removeMedia();
+                    charCount.textContent = '0/500 erey';
+                    
+                    setTimeout(() => {
+                        window.location.href = '/index.html';
+                    }, 2000);
+                } else {
+                    return response.json().then(data => {
+                        throw new Error(data.error || 'Khalad ayaa dhacay');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = error.message;
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Post';
+            });
+        });
+
+        // Check if user is logged in
+        fetch('/check-auth')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.loggedIn) {
+                window.location.href = '/login.html';
+            }
+        })
+        .catch(error => {
+            console.error('Error checking auth:', error);
+            window.location.href = '/login.html';
+        });
+    </script>
+</body>
+</html>

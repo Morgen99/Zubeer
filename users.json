@@ -1,0 +1,26 @@
+[
+  {
+    "id": "92dbe6c8-5ea8-4007-bf39-9e256f642c31",
+    "username": "lacaso",
+    "password": "$2b$10$pxQDejJPiuPPipeTMQQDsucP1j1ZvCPqVGqpS2aX3qYqv1M0.iwbu",
+    "profileImage": "1758313415006-956165397-images (1).jfif",
+    "createdAt": "2025-09-19T20:23:35.219Z",
+    "updatedAt": "2025-09-19T21:04:41.004Z"
+  },
+  {
+    "id": "21628071-fb68-4755-8e83-c6805da1ac40",
+    "username": "zaki",
+    "password": "$2b$10$a.TNAamt2qPrC77ywZpjuuYBL7pMry1O9KLOAecn4STLjwyE5RAB6",
+    "profileImage": "1758410300715-980690582-images.jfif",
+    "createdAt": "2025-09-20T23:18:20.970Z",
+    "updatedAt": "2025-09-20T23:18:20.970Z"
+  },
+  {
+    "id": "d0d8b523-6a7d-42c6-b454-a2197a1ee6fb",
+    "username": "victor",
+    "password": "$2b$10$Mbp0Cug9IDjB8zfVRq/s4O03IZDRn2jIlt4j6b0uahsRpGQe3o3DO",
+    "profileImage": "1758419492430-904323291-sun-blasts-a-m66-flare.jpg",
+    "createdAt": "2025-09-21T01:51:32.747Z",
+    "updatedAt": "2025-09-21T01:51:32.747Z"
+  }
+]

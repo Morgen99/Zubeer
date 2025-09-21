@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dejinta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-secondary: #666666;
+            --border-color: #dddddd;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --hover-color: #1557b0;
+            --danger-color: #dc3545;
+            --success-color: #28a745;
+        }
+
+        .dark-mode {
+            --primary-color: #3b82f6;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --border-color: #333333;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            --hover-color: #2563eb;
+            --danger-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        .header {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .back-btn {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .profile-username {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+        
+        .profile-email {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        input[type="text"],
+        input[type="password"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        input[type="file"] {
+            padding: 8px;
+            border: 2px dashed var(--border-color);
+            background-color: var(--bg-color);
+            cursor: pointer;
+        }
+        
+        input[type="file"]:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .file-info {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success-message {
+            color: var(--success-color);
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+        
+        .password-toggle {
+            position: relative;
+        }
+        
+        .toggle-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .toggle-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .danger-zone {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--danger-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .dark-mode .danger-zone {
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        
+        .danger-title {
+            color: var(--danger-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .danger-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+        
+        .theme-toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+        
+        .theme-toggle-checkbox {
+            display: none;
+        }
+        
+        .theme-toggle-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .theme-toggle-slider:after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        
+        .theme-toggle-checkbox:checked + .theme-toggle-slider {
+            background-color: var(--primary-color);
+        }
+        
+        .theme-toggle-checkbox:checked + .theme-toggle-slider:after {
+            transform: translateX(30px);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: var(--card-bg);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 20px;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .mobile-menu.open {
+            right: 0;
+        }
+        
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        
+        .mobile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .mobile-menu-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .dark-mode .mobile-menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .menu-overlay.open {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 12px 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .profile-section, .form-section {
+                padding: 15px;
+            }
+            
+            .theme-toggle-container {
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .theme-toggle {
+                width: 50px;
+                height: 25px;
+            }
+            
+            .theme-toggle-slider:after {
+                width: 20px;
+                height: 20px;
+            }
+            
+            .theme-toggle-checkbox:checked + .theme-toggle-slider:after {
+                transform: translateX(25px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-cog"></i> Dejinta Profile-ka</h1>
+            <div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Theme Toggle -->
+        <div class="theme-toggle-container">
+            <div class="theme-toggle-label">
+                <i class="fas fa-moon"></i> Dark Mode
+            </div>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-toggle-checkbox" class="theme-toggle-checkbox">
+                <label for="theme-toggle-checkbox" class="theme-toggle-slider"></label>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <img id="profileImage" class="profile-img" src="" alt="Profile">
+            <div class="profile-username" id="username">Loading...</div>
+            <div class="profile-email" id="userEmail">Isticmaale</div>
+        </div>
+        
+        <div class="form-section">
+            <h3 class="section-title"><i class="fas fa-user-edit"></i> Bedelada Profile-ka</h3>
+            
+            <form id="profileForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="profileImage">Sawirka Profile-ka:</label>
+                    <input type="file" id="profileImageInput" name="profile" accept="image/*">
+                    <div class="file-info">Ku soo rog sawir cusub (JPEG, PNG, GIF)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Magaca Cusub:</label>
+                    <input type="text" id="usernameInput" name="username" placeholder="Geli magaca cusub">
+                    <div id="usernameError" class="error-message">Magacan waa la isticmaalaa</div>
+                </div>
+                
+                <div class="form-group password-toggle">
+                    <label for="profilePassword">Password-ga Hadda (loo baahan yahay):</label>
+                    <input type="password" id="profilePassword" name="password" required>
+                    <button type="button" class="toggle-btn" onclick="togglePassword('profilePassword')">👁️</button>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="updateProfileBtn">
+                    <i class="fas fa-save"></i> Cusboonaysii Profile-ka
+                </button>
+                
+                <div id="profileSuccess" class="success-message">
+                    Profile-kaaga waa la cusboonaysiiyay!
+                </div>
+            </form>
+        </div>
+        
+        <div class="form-section">
+            <h3 class="section-title"><i class="fas fa-lock"></i> Bedelada Password-ka</h3>
+            
+            <form id="passwordForm">
+                <div class="form-group password-toggle">
+                    <label for="currentPassword">Password-ga Hadda:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                    <button type="button" class="toggle-btn" onclick="togglePassword('currentPassword')">👁️</button>
+                </div>
+                
+                <div class="form-group password-toggle">
+                    <label for="newPassword">Password Cusub:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                    <button type="button" class="toggle-btn" onclick="togglePassword('newPassword')">👁️</button>
+                </div>
+                
+                <div class="form-group password-toggle">
+                    <label for="confirmPassword">Ku Celiyi Password-ka:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <button type="button" class="toggle-btn" onclick="togglePassword('confirmPassword')">👁️</button>
+                    <div id="passwordError" class="error-message">Password-ku ma qabanayso</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="updatePasswordBtn">
+                    <i class="fas fa-key"></i> Cusboonaysii Password-ka
+                </button>
+                
+                <div id="passwordSuccess" class="success-message">
+                    Password-kaaga waa la cusboonaysiiyay!
+                </div>
+            </form>
+        </div>
+
+    <!-- Mobile Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <h3>Menu</h3>
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <a href="/index.html" class="mobile-menu-item">
+            <i class="fas fa-home"></i> Bogga Hore
+        </a>
+        <a href="/post.html" class="mobile-menu-item">
+            <i class="fas fa-plus"></i> Samee Post
+        </a>
+        <a href="setting.html" class="mobile-menu-item">
+            <i class="fas fa-cog"></i> Dejinta
+        </a>
+        <div class="mobile-menu-item">
+            <i class="fas fa-moon"></i> Dark Mode
+            <div class="theme-toggle">
+                <input type="checkbox" id="mobile-theme-toggle" class="theme-toggle-checkbox">
+                <label for="mobile-theme-toggle" class="theme-toggle-slider"></label>
+            </div>
+        </div>
+    </div>
+
+
+        <a href="#" class="mobile-menu-item" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Ka Bax
+        </a>
+    </div>
+
+            <div class="danger-zone">
+            <h3 class="danger-title"><i class="fas fa-exclamation-triangle"></i> 🔒 Xagga Khatarta Ah</h3>
+            <p class="danger-text">Tallaabadaan waxay saameyn weyn ku yeelanaysaa akoonkaaga.</p>
+            
+            <button class="btn btn-danger" onclick="confirmDeleteAccount()">
+                <i class="fas fa-trash"></i> Tirtir Akoonka
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+
+        // Load user info
+        async function loadUserInfo() {
+            try {
+                const response = await fetch('/check-auth');
+                const data = await response.json();
+                
+                if (data.loggedIn) {
+                    const userResponse = await fetch('/api/user-info');
+                    const userData = await userResponse.json();
+                    
+                    currentUser = userData;
+                    document.getElementById('username').textContent = userData.username;
+                    document.getElementById('usernameInput').value = userData.username;
+                    
+                    if (userData.profileImage) {
+                        document.getElementById('profileImage').src = `/uploads/profiles/${userData.profileImage}`;
+                    } else {
+                        document.getElementById('profileImage').src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjYwIiBmaWxsPSIjREREREJDIi8+CjxwYXRoIGQ9Ik02MCA2NkM3Mi4xNTQ3IDY2IDgyIDU2LjE1NDcgODIgNDRDODIgMzEuODQ1MyA3Mi4xNTQ3IDIyIDYwIDIyQzQ3Ljg0NTMgMjIgMzggMzEuODQ1MyAzOCA0NEMzOCA1Ni4xNTQ3IDQ3Ljg4NTMgNjYgNjAgNjZaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNjAgNzBDNDcuODQ1MyA3MCAzNy4wNjg0IDc3LjE2ODIgMzEuNzM5NSA4OC4wMDQyQzMxLjU3NzkgODguNDY3NiAzMS44MzEzIDg4Ljk3MDIgMzIuMzIxOCA4OS4wOTYyQzQzLjc2ODIgOTIuNDg4NiA1Ni4yMzE4IDkyLjQ4ODYgNjcuNjc4MiA4OS4wOTYyQzY4LjE2ODcgODguOTcwMiA2OC40MjIxIDg4LjQ2NzYgNjguMjYwNSA4OC4wMDQyQzYyLjkzMTYgNzcuMTY4MiA1Mi4xNTQ3IDcwIDYwIDcwWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+';
+                    }
+                } else {
+                    window.location.href = '/login.html';
+                }
+            } catch (error) {
+                console.error('Error loading user info:', error);
+                window.location.href = '/login.html';
+            }
+        }
+
+        // Check username availability
+        document.getElementById('usernameInput').addEventListener('blur', function() {
+            const username = this.value.trim();
+            if (username && username !== currentUser.username) {
+                fetch('/check-username', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        document.getElementById('usernameError').style.display = 'block';
+                    } else {
+                        document.getElementById('usernameError').style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        // Update profile - requires password for changes
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const usernameError = document.getElementById('usernameError');
+            if (usernameError.style.display === 'block') {
+                alert('Fadlan dooro magac kale, kan waxaa isticmaalaya qof kale');
+                return;
+            }
+            
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('profilePassword').value;
+            
+            if (!password) {
+                alert('Fadlan geli password-kaaga si aad u xaqiijiso');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const btn = document.getElementById('updateProfileBtn');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cusboonaysiinya...';
+            
+            fetch('/api/update-profile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('profileSuccess').style.display = 'block';
+                    document.getElementById('profileSuccess').textContent = data.message;
+                    
+                    // Update displayed username
+                    document.getElementById('username').textContent = username;
+                    currentUser.username = username;
+                    
+                    // Clear password field
+                    document.getElementById('profilePassword').value = '';
+                    
+                    // Reload profile image if changed
+                    if (formData.has('profile')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('profileImage').src = e.target.result;
+                        };
+                        reader.readAsDataURL(formData.get('profile'));
+                    }
+                    
+                    setTimeout(() => {
+                        document.getElementById('profileSuccess').style.display = 'none';
+                    }, 3000);
+                } else {
+                    alert(data.error || 'Khalad ayaa dhacay');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Khalad ayaa dhacay');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Cusboonaysii Profile-ka';
+            });
+        });
+
+        // Update password
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                document.getElementById('passwordError').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('passwordError').style.display = 'none';
+            
+            const btn = document.getElementById('updatePasswordBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cusboonaysiinya...';
+            
+            const formData = new FormData();
+            formData.append('currentPassword', currentPassword);
+            formData.append('newPassword', newPassword);
+            
+            fetch('/api/update-profile', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('passwordSuccess').style.display = 'block';
+                    document.getElementById('passwordSuccess').textContent = data.message;
+                    
+                    // Clear password fields
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                    
+                    setTimeout(() => {
+                        document.getElementById('passwordSuccess').style.display = 'none';
+                    }, 3000);
+                } else {
+                    alert(data.error || 'Khalad ayaa dhacay');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Khalad ayaa dhacay');
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-key"></i> Cusboonaysii Password-ka';
+            });
+        });
+
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+            } else {
+                input.type = 'password';
+            }
+        }
+
+        // Confirm account deletion
+        function confirmDeleteAccount() {
+            const confirmText = prompt('Fadlan ku qor "TIRTIRO" si aad xaqiijiso tirtirida akoonkaaga:');
+            if (confirmText === 'TIRTIRO') {
+                if (confirm('Ma hubtaa inaad rabto inaad tirtirto akoonkaaga? Tallaabadan dib looma noqon karo!')) {
+                    deleteAccount();
+                }
+            } else if (confirmText) {
+                alert('Magaca aad gelisay waa khalad');
+            }
+        }
+
+        // Delete account
+        async function deleteAccount() {
+            try {
+                const response = await fetch('/api/delete-account', {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Akoonkaga waa la tirtiray!');
+                    window.location.href = '/login.html';
+                } else {
+                    alert(data.error || 'Khalad ayaa dhacay tirtirida akoonka');
+                }
+            } catch (error) {
+                console.error('Error deleting account:', error);
+                alert('Khalad ayaa dhacay');
+            }
+        }
+
+        // Preview profile image
+        document.getElementById('profileImageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Theme toggle functionality
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle-checkbox');
+            const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.checked = true;
+                if (mobileThemeToggle) mobileThemeToggle.checked = true;
+            }
+            
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+                if (mobileThemeToggle) mobileThemeToggle.checked = this.checked;
+            });
+            
+            if (mobileThemeToggle) {
+                mobileThemeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.body.classList.add('dark-mode');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                        localStorage.setItem('theme', 'light');
+                    }
+                    themeToggle.checked = this.checked;
+                });
+            }
+        }
+
+        // Mobile menu functionality
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const menuClose = document.getElementById('mobileMenuClose');
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('menuOverlay');
+            
+            menuBtn.addEventListener('click', function() {
+                menu.classList.add('open');
+                overlay.classList.add('open');
+            });
+            
+            function closeMenu() {
+                menu.classList.remove('open');
+                overlay.classList.remove('open');
+            }
+            
+            menuClose.addEventListener('click', closeMenu);
+            overlay.addEventListener('click', closeMenu);
+        }
+
+        // Logout function
+        async function logout() {
+            try {
+                await fetch('/logout', { method: 'POST' });
+                window.location.href = '/login.html';
+            } catch (error) {
+                console.error('Error logging out:', error);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+            setupThemeToggle();
+            setupMobileMenu();
+        });
+    </script>
+</body>
+</html>
